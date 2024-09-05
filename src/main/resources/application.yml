@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: local # 해당 설정을 local 혹은 postgre 로 하거나 어플 실행시킬 때 active profiles 설정을 바꾸면 됨(후자가 우선순위 더 높음)
+
+---
+# active profiles 설정을 local로 했을 경우 해당 설정이 동작
+spring:
+  config:
+    activate:
+      on-profile: local
+  batch:
+    job:
+      name: ${job.name:NONE}
+    jdbc:
+      initialize-schema: embedded # 내장 DB일 때만 SQL 쿼리 스크립트 실행(default임)
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+
+---
+# active profiles 설정을 postgre로 했을 경우 해당 설정이 동작
+spring:
+  config:
+    activate:
+      on-profile: postgre
+  batch:
+    job:
+      name: ${job.name:NONE}
+    jdbc:
+      initialize-schema: always # SQL 쿼리 스크립트 항상 실행(배치 관련 db 테이블 자동 생성 및 반영)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/batchtest
+    username: test
+    password: ldcc!2626
