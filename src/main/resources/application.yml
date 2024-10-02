@@ -30,7 +30,7 @@ spring:
   batch:
     job:
       name: ${job.name:NONE}
-      enabled: false # 스프링 부트 배치 자동실행 안되도록 설정
+      #enabled: false # 스프링 부트 배치 자동실행 안되도록 설정
     jdbc:
       initialize-schema: always # SQL 쿼리 스크립트 항상 실행(배치 관련 db 테이블 자동 생성 및 반영)
   datasource:
