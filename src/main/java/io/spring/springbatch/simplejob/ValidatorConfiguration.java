@@ -3,6 +3,7 @@ package io.spring.springbatch.simplejob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.*;
+import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -24,7 +25,8 @@ public class ValidatorConfiguration {
                 .start(validatorStep1())
                 .next(validatorStep2())
                 .next(validatorStep3())
-                .validator(new CustomJobParametersValidator())
+                //.validator(new CustomJobParametersValidator())
+                .validator(new DefaultJobParametersValidator(new String[]{"name", "date"}, new String[] {"count"}))
                 .build();
     }
 
