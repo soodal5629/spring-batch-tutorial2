@@ -46,7 +46,7 @@ public class ScopeConfiguration {
                     public void beforeStep(StepExecution stepExecution) {
                         stepExecution.getExecutionContext().putString("name2", "JCL");
                     }
-                })
+                }).allowStartIfComplete(true)
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class ScopeConfiguration {
                 .tasklet((contribution, chunkContext) -> {
                     log.info(">>> scopeStep2 has executed");
                     return RepeatStatus.FINISHED;
-                }, transactionManager)
+                }, transactionManager).allowStartIfComplete(true)
                 .build();
     }
 
