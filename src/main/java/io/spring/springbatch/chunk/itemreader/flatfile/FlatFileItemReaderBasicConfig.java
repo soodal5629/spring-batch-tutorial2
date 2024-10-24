@@ -11,6 +11,8 @@ import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,7 @@ public class FlatFileItemReaderBasicConfig {
     @Bean
     public Step flatFileItemReaderBasicStep() {
         return new StepBuilder("flatFileItemReaderBasicStep", jobRepository)
+                .allowStartIfComplete(true)
                 .<String, Customer>chunk(5, transactionManager)
                 .reader(flatFileItemReader())
                 .writer(new ItemWriter() {
@@ -47,15 +50,28 @@ public class FlatFileItemReaderBasicConfig {
 
     @Bean
     public ItemReader flatFileItemReader() {
-        FlatFileItemReader<Customer> itemReader = new FlatFileItemReader<>();
-        itemReader.setResource(new ClassPathResource("/customer.csv"));
+//        FlatFileItemReader<Customer> itemReader = new FlatFileItemReader<>();
+//        itemReader.setResource(new ClassPathResource("/customer.csv"));
+//
+//        DefaultLineMapper<Customer> lineMapper = new DefaultLineMapper<>();
+//        lineMapper.setTokenizer(new DelimitedLineTokenizer(","));
+//        lineMapper.setFieldSetMapper(new CustomerFieldSetMapper());
+//
+//        itemReader.setLineMapper(lineMapper);
+//        itemReader.setLinesToSkip(1);
 
-        DefaultLineMapper<Customer> lineMapper = new DefaultLineMapper<>();
-        lineMapper.setTokenizer(new DelimitedLineTokenizer(","));
-        lineMapper.setFieldSetMapper(new CustomerFieldSetMapper());
-
-        itemReader.setLineMapper(lineMapper);
-        itemReader.setLinesToSkip(1);
-        return itemReader;
+        // builder 클래스로 설정
+        return new FlatFileItemReaderBuilder<Customer>()
+                .name("flatFile")
+                .resource(new ClassPathResource("/customer.csv"))
+                //.fieldSetMapper(new CustomerFieldSetMapper())
+                // 스프링 배치에서 제공하는 구현체 사용 가능
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>())
+                .targetType(Customer.class)
+                .linesToSkip(1)
+                // 스프링 배치에서 제공하는 구현체 사용 가능
+                .delimited().delimiter(",")
+                .names("name", "age", "year")
+                .build();
     }
 }
