@@ -89,11 +89,13 @@ public class FlatFileItemReaderBasicConfig {
                 .targetType(Customer.class)
                 .linesToSkip(1)
                 .fixedLength()
-//                .addColumns(new Range(1, 5))
-//                .addColumns(new Range(6, 9))
-                .addColumns(new Range(1))
-                .addColumns(new Range(6))
-                .addColumns(new Range(10))
+                .strict(false) // default: true
+                .addColumns(new Range(1, 5))
+                .addColumns(new Range(6, 9))
+                .addColumns(new Range(10, 11))
+//                .addColumns(new Range(1))
+//                .addColumns(new Range(6))
+//                .addColumns(new Range(10))
                 .names("name", "year", "age")
                 .build();
     }
