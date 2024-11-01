@@ -1,5 +1,6 @@
 package io.spring.springbatch.chunk.itemreader.xml;
 
+import io.spring.springbatch.chunk.itemreader.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -37,15 +38,15 @@ public class XMLReaderConfiguration {
     @Bean
     public Step xmlReaderStep() {
         return new StepBuilder("xmlReaderStep", jobRepository)
-                .<XmlCustomer, XmlCustomer>chunk(3, transactionManager)
+                .<Customer, Customer>chunk(3, transactionManager)
                 .reader(xmlItemReader())
                 .writer(xmlItemWriter())
                 .build();
     }
 
     @Bean
-    public ItemReader<? extends XmlCustomer> xmlItemReader() {
-        return new StaxEventItemReaderBuilder<XmlCustomer>()
+    public ItemReader<? extends Customer> xmlItemReader() {
+        return new StaxEventItemReaderBuilder<Customer>()
                 .name("statXml")
                 .resource(new ClassPathResource("/customer.xml"))
                 // root fragment
@@ -57,7 +58,7 @@ public class XMLReaderConfiguration {
     @Bean
     public Unmarshaller itemUnmarshaller() {
         Map<String, Class<?>> aliases = new HashMap<>();
-        aliases.put("customer", XmlCustomer.class);
+        aliases.put("customer", Customer.class);
         aliases.put("id", Long.class);
         aliases.put("name", String.class);
         aliases.put("age", Integer.class);
@@ -69,9 +70,9 @@ public class XMLReaderConfiguration {
     }
 
     @Bean
-    public ItemWriter<XmlCustomer> xmlItemWriter() {
+    public ItemWriter<Customer> xmlItemWriter() {
         return items -> {
-            for(XmlCustomer item : items) {
+            for(Customer item : items) {
                 log.info(">>> item = {}", item);
             }
         };

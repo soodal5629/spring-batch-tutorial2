@@ -1,9 +1,9 @@
-package io.spring.springbatch.chunk.itemreader.xml;
+package io.spring.springbatch.chunk.itemreader;
 
 import lombok.Data;
 
 @Data
-public class XmlCustomer {
+public class Customer {
     private Long id;
     private String name;
     private Integer age;
