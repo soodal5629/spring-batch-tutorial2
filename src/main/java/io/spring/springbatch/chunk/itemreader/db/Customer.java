@@ -1,9 +1,6 @@
 package io.spring.springbatch.chunk.itemreader.db;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -16,4 +13,7 @@ public class Customer {
     @Column(name = "lastname")
     private String lastName;
     private String birthdate;
+
+    @OneToOne(mappedBy = "customer")
+    private Address address;
 }

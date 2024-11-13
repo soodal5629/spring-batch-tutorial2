@@ -37,3 +37,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/batchtest
     username: test
     password: ldcc!2626
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.hibernate.format_sql: true
