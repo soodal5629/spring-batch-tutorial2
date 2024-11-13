@@ -9,5 +9,5 @@ insert into address(address_id, location, id) values(8, 'location8', 8);
 insert into address(address_id, location, id) values(9, 'location9', 9);
 insert into address(address_id, location, id) values(10, 'location10', 10);
 
--- update batch_job_execution set STATUS = 'FAILED', exit_code = 'FAILED' WHERE job_execution_id = 137;
--- UPDATE batch_step_execution SET STATUS = 'FAILED', exit_code = 'FAILED' WHERE step_execution_id = 213;
+update batch_job_execution set STATUS = 'FAILED', exit_code = 'FAILED' WHERE job_execution_id = 139;
+UPDATE batch_step_execution SET STATUS = 'FAILED', exit_code = 'FAILED' WHERE step_execution_id = 215;
