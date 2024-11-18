@@ -33,6 +33,7 @@ public class CompositeItemProcessorConfig {
     @Bean
     public Step compositionItemProcessorStep() {
         return new StepBuilder("compositionItemProcessorStep", jobRepository)
+                .allowStartIfComplete(true)
                 .<String, String>chunk(5, transactionManager)
                 .reader(new ItemReader<>() {
                     int i = 0;
