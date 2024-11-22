@@ -55,6 +55,7 @@ public class FaultTolerantConfiguration {
                 .skipLimit(2)
                 .retry(IllegalStateException.class)
                 .retryLimit(2)
+                .allowStartIfComplete(true)
                 .build();
     }
 }
