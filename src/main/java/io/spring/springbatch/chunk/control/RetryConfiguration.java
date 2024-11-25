@@ -42,6 +42,8 @@ public class RetryConfiguration {
                 .faultTolerant()
                 .retry(RetryableException.class)
                 .retryLimit(2)
+                .skip(RetryableException.class)
+                .skipLimit(2)
                 .allowStartIfComplete(true)
                 .build();
     }
