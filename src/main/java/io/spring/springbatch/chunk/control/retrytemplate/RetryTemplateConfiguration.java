@@ -47,6 +47,10 @@ public class RetryTemplateConfiguration {
                 .processor(retryTemplateItemProcessor())
                 .writer(items -> items.forEach(item -> log.info("retry template writer item = {}", item)))
                 .faultTolerant()
+                .retry(RetryableException.class)
+                .retryLimit(2)
+                .skip(RetryableException.class)
+                .skipLimit(2)
                 .allowStartIfComplete(true)
                 .build();
     }
@@ -77,7 +81,7 @@ public class RetryTemplateConfiguration {
 
         RetryTemplate retryTemplate = new RetryTemplate();
         retryTemplate.setRetryPolicy(simpleRetryPolicy);
-        // retryTemplate.setBackOffPolicy(backOffPolicy);
+        retryTemplate.setBackOffPolicy(backOffPolicy);
         return retryTemplate;
     }
 }
