@@ -29,6 +29,7 @@ dependencies {
 	implementation 'org.springframework:spring-oxm'
 	implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.16'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.batch:spring-batch-integration'
 
 	runtimeOnly 'com.h2database:h2' // 스프링 배치는 DB 클래스패스에 잡히지 않으면(스키마가 생성되지 않을 경우) 오류 발생
 	runtimeOnly 'org.postgresql:postgresql'
