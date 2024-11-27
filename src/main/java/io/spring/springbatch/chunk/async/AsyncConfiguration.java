@@ -1,5 +1,6 @@
 package io.spring.springbatch.chunk.async;
 
+import io.spring.springbatch.chunk.async.listener.StopWatchJobListener;
 import io.spring.springbatch.chunk.itemWriter.db.jpa.Customer2;
 import io.spring.springbatch.chunk.itemWriter.xml.CustomerRowMapper;
 import io.spring.springbatch.chunk.itemreader.db.Customer;
@@ -14,7 +15,6 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.integration.async.AsyncItemProcessor;
 import org.springframework.batch.integration.async.AsyncItemWriter;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;

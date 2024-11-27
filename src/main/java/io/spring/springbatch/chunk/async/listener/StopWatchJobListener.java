@@ -1,4 +1,4 @@
-package io.spring.springbatch.chunk.async;
+package io.spring.springbatch.chunk.async.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;
