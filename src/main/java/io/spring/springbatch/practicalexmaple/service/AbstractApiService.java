@@ -3,6 +3,7 @@ package io.spring.springbatch.practicalexmaple.service;
 import io.spring.springbatch.practicalexmaple.domain.ApiInfo;
 import io.spring.springbatch.practicalexmaple.domain.ApiRequestVO;
 import io.spring.springbatch.practicalexmaple.domain.ApiResponseVO;
+import org.springframework.batch.item.Chunk;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,10 +13,9 @@ import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.List;
 
 public abstract class AbstractApiService {
-    public ApiResponseVO service(List<? extends ApiRequestVO> apiRequest) {
+    public ApiResponseVO service(Chunk<? extends ApiRequestVO> apiRequest) {
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
         RestTemplate restTemplate = restTemplateBuilder
                 .errorHandler(new ResponseErrorHandler() {

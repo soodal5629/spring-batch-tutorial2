@@ -12,6 +12,9 @@ import io.spring.springbatch.practicalexmaple.domain.ApiRequestVO;
 import io.spring.springbatch.practicalexmaple.domain.Product;
 import io.spring.springbatch.practicalexmaple.domain.ProductVO;
 import io.spring.springbatch.practicalexmaple.partition.ProductPartitioner;
+import io.spring.springbatch.practicalexmaple.service.ApiService1;
+import io.spring.springbatch.practicalexmaple.service.ApiService2;
+import io.spring.springbatch.practicalexmaple.service.ApiService3;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Step;
@@ -45,6 +48,9 @@ public class ApiStepConfiguration {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final DataSource dataSource;
+    private final ApiService1 apiService1;
+    private final ApiService2 apiService2;
+    private final ApiService3 apiService3;
     private int chunkSize = 10;
 
     @Bean
@@ -87,6 +93,10 @@ public class ApiStepConfiguration {
 
     @Bean
     @StepScope
+    /**
+     * @StepScope, @Value("#{stepExecutionContext['product']}") 를 이용하여 DTO/VO 객체를 읽으려면 해당 클래스는 Serializable 을 구현해야 함
+     * 안그러면 IllegalArgumentException 발생
+     */
     public ItemReader<ProductVO> apiItemReader(@Value("#{stepExecutionContext['product']}") ProductVO productVO) throws Exception {
         JdbcPagingItemReader<ProductVO> reader = new JdbcPagingItemReader<>();
         reader.setDataSource(dataSource);
@@ -134,9 +144,9 @@ public class ApiStepConfiguration {
         ClassifierCompositeItemWriter<ApiRequestVO> writer = new ClassifierCompositeItemWriter<>();
         WriterClassifier<ApiRequestVO, ItemWriter<? super ApiRequestVO>> classifier = new WriterClassifier<>();
         Map<String, ItemWriter<ApiRequestVO>> map = new HashMap<>();
-        map.put("1", new ApiItemWriter1());
-        map.put("2", new ApiItemWriter2());
-        map.put("3", new ApiItemWriter3());
+        map.put("1", new ApiItemWriter1(apiService1));
+        map.put("2", new ApiItemWriter2(apiService2));
+        map.put("3", new ApiItemWriter3(apiService3));
         classifier.setWriterMap(map);
         writer.setClassifier(classifier);
 

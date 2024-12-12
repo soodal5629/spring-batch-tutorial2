@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import org.springframework.batch.item.Chunk;
 
 @Data
 @Builder
@@ -14,5 +13,5 @@ import java.util.List;
 public class ApiInfo {
     private String url;
     // api 서버로 보낼 request 객체(api 서버 별도 존재한다고 가정)
-    private List<? extends ApiRequestVO> apiRequestList;
+    private Chunk<? extends ApiRequestVO> apiRequestList;
 }
